@@ -78,5 +78,31 @@ function toggleFullScreen() {
 }
 
 butt.addEventListener("click", function(e) {
-    toggleFullScreen();
+  toggleFullScreen();
 }, false);
+
+
+var noSleep = new NoSleep();
+var fullScr = false;
+if (document.addEventListener)
+{
+ document.addEventListener('fullscreenchange', exitHandler, false);
+ document.addEventListener('mozfullscreenchange', exitHandler, false);
+ document.addEventListener('MSFullscreenChange', exitHandler, false);
+ document.addEventListener('webkitfullscreenchange', exitHandler, false);
+}
+
+function exitHandler()
+{
+ if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== null)
+ {
+  fullScr = !fullScr;
+  if(!fullScr) {
+    noSleep.disable();
+    console.log("off");
+  } else {
+    noSleep.enable();
+    console.log("on");
+  }
+ }
+}
